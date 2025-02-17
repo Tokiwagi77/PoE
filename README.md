@@ -1,2 +1,2 @@
 # PoE
-Path of Exile系のプログラム
+Path of Exile系のツールを作る予定
