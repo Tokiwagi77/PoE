@@ -13,7 +13,7 @@
 
 <body>
 <div id="container">
-  <h1>アズカパのソウルコアガチャシミュレーター v0.03</h1>
+  <h1>アズカパのソウルコアガチャシミュレーター v0.03c</h1>
   <p>アズカパのソウルコアがリフォージすると15分の1の確率で現れるという憶測に基づいています。</p>
   <p>もしこのシミュレート結果を信じて破産しても当方に責任は取れません。</p>
   <p>ソースコードは<a href="https://github.com/Tokiwagi77/PoE">こちら</a>です。エラー、ロジックの間違い等ありましたら報告していただけると幸いです。</p>
@@ -21,26 +21,27 @@
   <div class="form"></div>
       <form action="" method="get" class="form">
         <div>
-          <label for="div" class="block-label">使う神のオーブの数</label>
-          <input type="number" name="div" id="div" value="0" min="0" max="10000"/>
+          <label for="div" class="block-label">所持神のオーブ</label>
+          <input type="number" name="div" id="div" value="10" min="0" max="10000"/>
 
-          <label for="gold" class="block-label">使う金貨の数</label>
-          <input type="number" name="gold" id="gold" value="0" min="0" max="100000000"/>
+          <label for="target" class="block-label">目標の神のオーブ数（目標に到達するとシュミレートを終了）</label>
+          <input type="number" name="target" id="target" value="400" min="0" max="10000"/>
 
-          <label for="divToSoulcoreRate" class="block-label">1神のオーブ当たりの任意のソウルコア数</label>
+          <label for="gold" class="block-label">所持金貨</label>
+          <input type="number" name="gold" id="gold" value="0" min="1000000" max="100000000"/>
+
+          <label for="divToSoulcoreRate" class="block-label">1神のオーブで買えるソウルコアの数</label>
           <input type="number" name="divToSoulcoreRate" id="divToSoulcoreRate" value="10" min="0" max="1000" step="0.1"/>
+
+          <label for="azcapaToDivRate" class="block-label">1アズカパのソウルコアで買える神のオーブの数</label>
+          <input type="number" name="azcapaToDivRate" id="azcapaToDivRate" value="4" min="0" max="1000" step="0.1"/>
         
-          <label for="divToSoulcoreTax" class="block-label">ソウルコア1つ当りのカレンシー交換手数料</label>
+          <label for="divToSoulcoreTax" class="block-label">ソウルコア1つ買うごとのカレンシー交換手数料</label>
           <input type="number" name="divToSoulcoreTax" id="divToSoulcoreTax" value="500" min="0" max="10000"/>
         
-          <label for="azcapaToDivRate" class="block-label">1アズカパのソウルコア当たりの神のオーブ数</label>
-          <input type="number" name="azcapaToDivRate" id="azcapaToDivRate" value="4" min="0" max="1000" step="0.1"/>
-
-          <label for="azcapaToDivTax" class="block-label">神のオーブ1つ当りのカレンシー交換手数料</label>
+          <label for="azcapaToDivTax" class="block-label">神のオーブ1つ買うごとのカレンシー交換手数料</label>
           <input type="number" name="azcapaToDivTax" id="azcapaToDivTax" value="800" min="0" max="10000"/>
         
-          <label for="target" class="block-label">目標神のオーブ数</label>
-          <input type="number" name="target" id="target" value="0" min="0" max="10000"/>
         </div>
         <div style="margin-top: 1em;">
           <table>
@@ -160,13 +161,13 @@
         <td>リフォージ回数: </td><td id="reforgeCountResult"></td>
       </tr>
       <tr>
-        <td>神のオーブ: </td><td id="divResult"></td>
+        <td>所持神のオーブ: </td><td id="divResult"></td>
       </tr>
       <tr>
-        <td>残り金貨: </td><td id="goldResult"></td>
+        <td>所持金貨: </td><td id="goldResult"></td>
       </tr>
       <tr>
-        <th>残りソウルコア</th>
+        <th>残ったソウルコア</th>
       </tr>
       <tr>
         <td>トポタンテ: </td><td id="topotanteResult"></td>
