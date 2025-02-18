@@ -187,11 +187,11 @@ function reforge () {
             }],
         },
         options: {
-			plugins: {
-				legend: {
-					display: false
-				}
-			},
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
             scales: {
                 x: {
                     title: {
@@ -200,7 +200,7 @@ function reforge () {
                     }
                 }
             }
-		}
+        }
     };
 
     if (lineChartObject) {
