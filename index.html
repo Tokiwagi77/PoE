@@ -1,0 +1,133 @@
+<!doctype html>
+
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+
+  <title>ソウルコアガチャ</title>
+  <meta name="description" content="ソウルコアガチャ">
+  <meta name="author" content="Tokiwagi">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+<div id="container">
+  <h1>ソウルコアガチャ</h1>
+  <h2>設定</h2>
+  <div class="form"></div>
+    <form action="" method="get" class="form">
+      <label for="div">使う神のオーブの数: </label>
+      <input type="number" name="div" id="div" value="0" min="0" max="10000"/>
+
+      <label for="gold">使う金貨の数: </label>
+      <input type="number" name="gold" id="gold" value="0" min="0" max="10000"/>
+
+      <label for="divToSoulcoreRate">1神のオーブ当たりの任意のソウルコア数: </label>
+      <input type="number" name="divToSoulcoreRate" id="divToSoulcoreRate" value="10" min="0" max="1000" step="0.1"/>
+
+      <label for="divToSoulcoreTax">ソウルコア1つ当りのカレンシー交換手数料: </label>
+      <input type="number" name="divToSoulcoreTax" id="divToSoulcoreTax" value="500" min="0" max="10000"/>
+
+      <label for="azcapaToDivRate">1アズカパのソウルコア当たりの神のオーブ数: </label>
+      <input type="number" name="azcapaToDivRate" id="azcapaToDivRate" value="4" min="0" max="1000" step="0.1"/>
+
+      <label for="azcapaToDivTax">神のオーブ1つ当りのカレンシー交換手数料: </label>
+      <input type="number" name="azcapaToDivTax" id="azcapaToDivTax" value="800" min="0" max="10000"/>
+
+      <label for="target">目標神のオーブ数: </label>
+      <input type="number" name="target" id="target" value="0" min="0" max="10000"/>
+
+      <p>持っている各ソウルコア</p>
+      <label for="topotante">トポタンテ: </label>
+      <input type="number" name="topotante" id="topotante" value="0" value="0" min="0" max="1000"/>
+
+      <label for="tacati">タカティ: </label>
+      <input type="number" name="tacati" id="tacati" value="0" value="0" min="0" max="1000"/>
+
+      <label for="opiloti">オピロティ: </label>
+      <input type="number" name="opiloti" id="opiloti" value="0" value="0" min="0" max="1000"/>
+
+      <label for="jiquani">ヘクアニ: </label>
+      <input type="number" name="jiquani" id="jiquani" value="0" value="0" min="0" max="1000"/>
+
+      <label for="zalatl">ザラトル: </label>
+      <input type="number" name="zalatl" id="zalatl" value="0" value="0" min="0" max="1000"/>
+
+      <label for="citaqualotl">シアクラトル: </label>
+      <input type="number" name="citaqualotl" id="citaqualotl" value="0" value="0" min="0" max="1000"/>
+
+      <label for="puhuarte">プフアーテ: </label>
+      <input type="number" name="puhuarte" id="puhuarte" value="0" value="0" min="0" max="1000"/>
+
+      <label for="tzamoto">ザモト: </label>
+      <input type="number" name="tzamoto" id="tzamoto" value="0" value="0" min="0" max="1000"/>
+
+      <label for="xopec">ゾペック: </label>
+      <input type="number" name="xopec" id="xopec" value="0" value="0" min="0" max="1000"/>
+
+      <label for="quipolatl">クイポラトル: </label>
+      <input type="number" name="quipolatl" id="quipolatl" value="0" value="0" min="0" max="1000"/>
+
+      <label for="ticaba">ティカバ: </label>
+      <input type="number" name="ticaba" id="ticaba" value="0" value="0" min="0" max="1000"/>
+
+      <label for="atmohua">アトモフア: </label>
+      <input type="number" name="atmohua" id="atmohua" value="0" value="0" min="0" max="1000"/>
+
+      <label for="cholotl">チョロトル: </label>
+      <input type="number" name="cholotl" id="cholotl" value="0" value="0" min="0" max="1000"/>
+
+      <label for="zantipi">ザンティーピ: </label>
+      <input type="number" name="zantipi" id="zantipi" value="0" value="0" min="0" max="1000"/>
+
+      <label for="azcapa">アズカパ: </label>
+      <input type="number" name="azcapa" id="azcapa" value="0" value="0" min="0" max="1000"/>
+
+      <input type="button" id="reforgeButton" value="実行">
+    </form>
+  </div>
+
+  <h2>結果</h2>
+  <div class="result">
+    <table>
+      <tr>
+        <td>神のオーブ: </td><td id="divResult"></td>
+      </tr>
+      <tr>
+        <td>残り金貨: </td><td id="goldResult"></td>
+      </tr>
+      <tr>
+        <th>残りソウルコア</th>
+      </tr>
+      <tr>
+        <td>トポタンテ: </td><td id="topotanteResult"></td>
+        <td>タカティ: </td><td id="tacatiResult"></td>
+        <td>オピロティ: </td><td id="opilotiResult"></td>
+      </tr>
+      <tr>
+        <td>ヘクアニ: </td><td id="jiquaniResult"></td>
+        <td>ザラトル: </td><td id="zalatlResult"></td>
+        <td>シアクラトル: </td><td id="citaqualotlResult"></td>
+      </tr>
+      <tr>
+        <td>プフアーテ: </td><td id="puhuarteResult"></td>
+        <td>ザモト: </td><td id="tzamotoResult"></td>
+        <td>ゾペック: </td><td id="xopecResult"></td>
+      </tr>
+      <tr>
+        <td>クイポラトル: </td><td id="quipolatlResult"></td>
+        <td>ティカバ: </td><td id="ticabaResult"></td>
+        <td>アトモフア: </td><td id="atmohuaResult"></td>
+      </tr>
+      <tr>
+        <td>チョロトル: </td><td id="cholotlResult"></td>
+        <td>ザンティーピ: </td><td id="zantipiResult"></td>
+        <td>アズカパ: </td><td id="azcapaResult"></td>
+      </tr>
+    </table>
+  </div>
+
+</div>  
+<script src="js/ReforgeSoulCore.js"></script>
+</body>
+</html>
