@@ -217,6 +217,9 @@ function drawChart(reforgeGraphData, divGraphData) {
                         display: true,
                         text: 'リフォージ回数'
                     }
+                },
+                y: {
+                    beginAtZero: true
                 }
             }
         }
