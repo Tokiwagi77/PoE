@@ -65,99 +65,51 @@ function reforge () {
     let divGraphData = [];
     divGraphData.push(div);
 
+    // 持っているアズカパを全て換金
+    gold = gold - azcapaToDivTax * azcapaToDivRate * soulcoreList[14]; 
+    div = div + azcapaToDivRate * soulcoreList[14];
+    soulcoreList[14] = 0;
+
     // 目標金額に到達するか破産するまで実行
-    reforge : while (div > 0 && div < target && gold > 0 
-        || soulcoreList[0] >= 3
-        || soulcoreList[1] >= 3
-        || soulcoreList[2] >= 3
-        || soulcoreList[3] >= 3
-        || soulcoreList[4] >= 3
-        || soulcoreList[5] >= 3
-        || soulcoreList[6] >= 3
-        || soulcoreList[7] >= 3
-        || soulcoreList[8] >= 3
-        || soulcoreList[9] >= 3
-        || soulcoreList[10] >= 3
-        || soulcoreList[11] >= 3
-        || soulcoreList[12] >= 3
-        || soulcoreList[13] >= 3
-        || soulcoreList[14] >= 1
-    ){
+    while (div > 0 && div < target && gold > 0 || has3orMoreSoulcore(soulcoreList) != -1) {
         
-        for(let soulcoreKey in soulcoreList) {
+        // アズカパ以外の3つ以上あるソウルコアを検索
+        let soulcoreKey = has3orMoreSoulcore(soulcoreList)
+        if (soulcoreKey != -1) {
 
-            // アズカパ以外の3つ以上あるソウルコアを検索
-            if (soulcoreKey < 14  && soulcoreList[soulcoreKey] >= 3) {
-                
-                // ある場合３個使ってリフォージ
-                soulcoreList[soulcoreKey] = soulcoreList[soulcoreKey] - 3;
-                reforgeCount++;
-                let reforgedSoulcoreKey = Math.floor(Math.random() * 15);
-                
-                // アズカパの場合換金、そうでないならストックに追加
-                if(reforgedSoulcoreKey == 14) {
-                    if(gold - azcapaToDivTax * azcapaToDivRate > 0) {
-                        gold = gold - azcapaToDivTax * azcapaToDivRate;
-                        div = div + azcapaToDivRate;
-                    } else {
-                        if(soulcoreList[0] < 3
-                            && soulcoreList[1] < 3
-                            && soulcoreList[2] < 3
-                            && soulcoreList[3] < 3
-                            && soulcoreList[4] < 3
-                            && soulcoreList[5] < 3
-                            && soulcoreList[6] < 3
-                            && soulcoreList[7] < 3
-                            && soulcoreList[8] < 3
-                            && soulcoreList[9] < 3
-                            && soulcoreList[10] < 3
-                            && soulcoreList[11] < 3
-                            && soulcoreList[12] < 3
-                            && soulcoreList[13] < 3
-                            && soulcoreList[14] < 1
-                        ){
-                            // ゴールドが尽きたので終了
-                            break reforge;
-                        }
-                    }
+            // ある場合３個使ってリフォージ
+            soulcoreList[soulcoreKey] = soulcoreList[soulcoreKey] - 3;
+            reforgeCount++;
+            let reforgedSoulcoreKey = Math.floor(Math.random() * 15);
+
+            // アズカパの場合換金、そうでないならストックに追加
+            if(reforgedSoulcoreKey == 14) {
+                if (gold - azcapaToDivTax * azcapaToDivRate > 0) {
+                    gold = gold - azcapaToDivTax * azcapaToDivRate;
+                    div = div + azcapaToDivRate;
                 } else {
-                    soulcoreList[reforgedSoulcoreKey] = soulcoreList[reforgedSoulcoreKey] + 1;
+                    if(has3orMoreSoulcore(soulcoreList) == -1) {
+                        // 金貨が尽きてソウルコアもないので終了
+                        break;
+                    }
                 }
-
-                // リフォージ結果をグラフ用に追加
-                reforgeGraphData.push(reforgeCount);
-                divGraphData.push(div);
-
-                break;
+            } else {
+                soulcoreList[reforgedSoulcoreKey] = soulcoreList[reforgedSoulcoreKey] + 1;
             }
-            
+            // リフォージ結果をグラフ用に追加
+            reforgeGraphData.push(reforgeCount);
+            divGraphData.push(div);
+        } else {
             // 存在しない場合ソウルコアを購入
-            if (soulcoreKey >= 14) {
-                // 全てトポタンテを購入すると仮定
-                if(gold - divToSoulcoreTax * divToSoulcoreRate > 0 && div > 0) {
-                    div = div - 1;
-                    gold = gold - divToSoulcoreTax * divToSoulcoreRate;
-                    soulcoreList[0] = soulcoreList[0] + divToSoulcoreRate;
-                } else {
-                    if(soulcoreList[0] < 3
-                        && soulcoreList[1] < 3
-                        && soulcoreList[2] < 3
-                        && soulcoreList[3] < 3
-                        && soulcoreList[4] < 3
-                        && soulcoreList[5] < 3
-                        && soulcoreList[6] < 3
-                        && soulcoreList[7] < 3
-                        && soulcoreList[8] < 3
-                        && soulcoreList[9] < 3
-                        && soulcoreList[10] < 3
-                        && soulcoreList[11] < 3
-                        && soulcoreList[12] < 3
-                        && soulcoreList[13] < 3
-                        && soulcoreList[14] < 1
-                    ){
-                        // ゴールドが尽きたので終了
-                        break reforge;
-                    }
+            // 全てトポタンテを購入すると仮定
+            if(gold - divToSoulcoreTax * divToSoulcoreRate > 0 && div > 0) {
+                div = div - 1;
+                gold = gold - divToSoulcoreTax * divToSoulcoreRate;
+                soulcoreList[0] = soulcoreList[0] + divToSoulcoreRate;
+            } else {
+                if(has3orMoreSoulcore(soulcoreList) == -1) {
+                    // 金貨が尽きて神のオーブもソウルコアもないので終了
+                    break;
                 }
             }
         }
@@ -222,10 +174,28 @@ function reforge () {
     const azcapaResult = document.getElementById('azcapaResult');
     azcapaResult.innerText = soulcoreList["14"]
 
-    // 折れ線グラフ描写
+    // グラフを描写
+    drawChart(reforgeGraphData, divGraphData)
+}
+
+// 3つ以上あるソウルコアを検索してそのキー値を返し、存在しない場合-1を返す。
+function has3orMoreSoulcore(soulcoreList){
+    let key = -1;
+    for(let soulcoreKey in soulcoreList) {
+        if(soulcoreList[soulcoreKey] >= 3) {
+            key = soulcoreKey;
+            break;
+        }
+    }
+    return key;
+}
+
+// グラフを描写
+function drawChart(reforgeGraphData, divGraphData) {
+    // グラフの描写先要素を取得
     let lineCtx = document.getElementById("lineChart").getContext('2d');
 
-    // 線グラフの設定
+    // 折れ線グラフの設定
     let lineConfig = {
         type: 'line',
         data: {
@@ -252,9 +222,9 @@ function reforge () {
         }
     };
 
+    // グラフを再描写
     if (lineChartObject) {
         lineChartObject.destroy();
     }
-
     lineChartObject = new Chart(lineCtx, lineConfig);
 }
