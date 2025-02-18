@@ -64,9 +64,24 @@ function reforge () {
 
     let divGraphData = [];
     divGraphData.push(div);
-    
+
     // 目標金額に到達するか破産するまで実行
-    reforge : while (div > 0 && div < target && gold > 0){
+    reforge : while (div > 0 && div < target && gold > 0 
+        || soulcoreList[0] >= 3
+        || soulcoreList[1] >= 3
+        || soulcoreList[2] >= 3
+        || soulcoreList[3] >= 3
+        || soulcoreList[4] >= 3
+        || soulcoreList[5] >= 3
+        || soulcoreList[6] >= 3
+        || soulcoreList[7] >= 3
+        || soulcoreList[8] >= 3
+        || soulcoreList[9] >= 3
+        || soulcoreList[10] >= 3
+        || soulcoreList[12] >= 3
+        || soulcoreList[13] >= 3
+        || soulcoreList[14] >= 1
+    ){
         
         for(let soulcoreKey in soulcoreList) {
 
@@ -101,11 +116,10 @@ function reforge () {
             // 存在しない場合ソウルコアを購入
             if (soulcoreKey >= 14) {
                 // 全てトポタンテを購入すると仮定
-
-                if(gold - divToSoulcoreTax * divToSoulcoreRate > 0) {
+                if(gold - divToSoulcoreTax * divToSoulcoreRate > 0 && div > 0) {
                     div = div - 1;
                     gold = gold - divToSoulcoreTax * divToSoulcoreRate;
-                    soulcoreList["0"] = soulcoreList["0"] + divToSoulcoreRate;
+                    soulcoreList[0] = soulcoreList[0] + divToSoulcoreRate;
                 } else {
                     // ゴールドが尽きたので終了
                     break reforge;
