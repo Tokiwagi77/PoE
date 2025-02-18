@@ -1,58 +1,69 @@
 const reforgeButton = document.getElementById('reforgeButton');
 reforgeButton.addEventListener("click", reforge);
+let lineChartObject = null;
 
 function reforge () {
+    // リフォージ回数
+    let reforgeCount = 0;
+
     // 持っている神のオーブ
-    const startDiv = document.getElementById('div').value;
+    const startDiv = Number(document.getElementById('div').value);
     let div = startDiv;
     
     // 持っている金貨
-    const startGold = document.getElementById('gold').value;
+    const startGold = Number(document.getElementById('gold').value);
     let gold = startGold;
     
     // 1神のオーブ当たりのソウルコア数と交換手数料
-    const divToSoulcoreRate = document.getElementById('divToSoulcoreRate').value;
-    const divToSoulcoreTax = document.getElementById('divToSoulcoreTax').value;
+    const divToSoulcoreRate = Number(document.getElementById('divToSoulcoreRate').value);
+    const divToSoulcoreTax = Number(document.getElementById('divToSoulcoreTax').value);
     
     // 1アズカパのソウルコア当たりの神のオーブ数と交換手数料
-    const azcapaToDivRate = document.getElementById('azcapaToDivRate').value;
-    const azcapaToDivTax = document.getElementById('azcapaToDivTax').value;
+    const azcapaToDivRate = Number(document.getElementById('azcapaToDivRate').value);
+    const azcapaToDivTax = Number(document.getElementById('azcapaToDivTax').value);
     
     // 目標神のオーブ数
-    const target =  document.getElementById('target').value;
+    const target =  Number(document.getElementById('target').value);
     
     // 持っている各ソウルコア
     const soulcoreList = {};
     // トポタンテ
-    soulcoreList["0"] = document.getElementById('topotante').value;
+    soulcoreList[0] = Number(document.getElementById('topotante').value);
     // タカティ
-    soulcoreList["1"] = document.getElementById('tacati').value;
+    soulcoreList[1] = Number(document.getElementById('tacati').value);
     // オピロティ
-    soulcoreList["2"] = document.getElementById('opiloti').value;
+    soulcoreList[2] = Number(document.getElementById('opiloti').value);
     // ヘクアニ
-    soulcoreList["3"] = document.getElementById('jiquani').value;
+    soulcoreList[3] = Number(document.getElementById('jiquani').value);
     // ザラトル
-    soulcoreList["4"] = document.getElementById('zalatl').value;
+    soulcoreList[4] = Number(document.getElementById('zalatl').value);
     // シアクラトル
-    soulcoreList["5"] = document.getElementById('citaqualotl').value;
+    soulcoreList[5] = Number(document.getElementById('citaqualotl').value);
     // プフアーテ
-    soulcoreList["6"] = document.getElementById('puhuarte').value;
+    soulcoreList[6] = Number(document.getElementById('puhuarte').value);
     // ザモト
-    soulcoreList["7"] = document.getElementById('tzamoto').value;
+    soulcoreList[7] = Number(document.getElementById('tzamoto').value);
     // ゾペック
-    soulcoreList["8"] = document.getElementById('xopec').value;
+    soulcoreList[8] = Number(document.getElementById('xopec').value);
     // クイポラトル
-    soulcoreList["9"] = document.getElementById('quipolatl').value;
+    soulcoreList[9] = Number(document.getElementById('quipolatl').value);
     // ティカバ
-    soulcoreList["10"] = document.getElementById('ticaba').value;
+    soulcoreList[10] = Number(document.getElementById('ticaba').value);
     // アトモフア
-    soulcoreList["11"] = document.getElementById('atmohua').value;
+    soulcoreList[11] = Number(document.getElementById('atmohua').value);
     // チョロトル
-    soulcoreList["12"] = document.getElementById('cholotl').value;
+    soulcoreList[12] = Number(document.getElementById('cholotl').value);
     // ザンティーピ
-    soulcoreList["13"] = document.getElementById('zantipi').value;
+    soulcoreList[13] = Number(document.getElementById('zantipi').value);
     // アズカパ
-    soulcoreList["14"] = document.getElementById('azcapa').value;
+    soulcoreList[14] = Number(document.getElementById('azcapa').value);
+
+    // グラフ用設定配列
+    let reforgeGraphData = [];
+    reforgeGraphData.push(reforgeCount);
+
+    let divGraphData = [];
+    divGraphData.push(div);
     
     // 目標金額に到達するか破産するまで実行
     reforge : while (div > 0 && div < target && gold > 0){
@@ -64,6 +75,7 @@ function reforge () {
                 
                 // ある場合３個使ってリフォージ
                 soulcoreList[soulcoreKey] = soulcoreList[soulcoreKey] - 3;
+                reforgeCount++;
                 let reforgedSoulcoreKey = Math.floor(Math.random() * 15);
                 
                 // アズカパの場合換金、そうでないならストックに追加
@@ -78,6 +90,11 @@ function reforge () {
                 } else {
                     soulcoreList[reforgedSoulcoreKey] = soulcoreList[reforgedSoulcoreKey] + 1;
                 }
+
+                // リフォージ結果をグラフ用に追加
+                reforgeGraphData.push(reforgeCount);
+                divGraphData.push(div);
+
                 break;
             }
             
@@ -96,8 +113,14 @@ function reforge () {
             }
         }
     }
+    // ループを抜けたあとの最後の結果を追加
+    reforgeGraphData.push(reforgeCount);
+    divGraphData.push(div);
 
     // 結果表示
+    const reforgeCountResult = document.getElementById('reforgeCountResult');
+    reforgeCountResult.innerText = reforgeCount;
+
     const divResult = document.getElementById('divResult');
     divResult.innerText = div;
 
@@ -106,47 +129,98 @@ function reforge () {
 
     // トポタンテ
     const topotanteResult = document.getElementById('topotanteResult');
-    topotanteResult = soulcoreList["0"];
+    topotanteResult.innerText = soulcoreList["0"];
     // タカティ
     const tacatiResult = document.getElementById('tacatiResult');
-    tacatiResult = soulcoreList["1"]
+    tacatiResult.innerText = soulcoreList["1"]
     // オピロティ
     const opilotiResult = document.getElementById('opilotiResult');
-    opilotiResult = soulcoreList["2"]
+    opilotiResult.innerText = soulcoreList["2"]
     // ヘクアニ
     const jiquaniResult = document.getElementById('jiquaniResult');
-    jiquaniResult = soulcoreList["3"]
+    jiquaniResult.innerText = soulcoreList["3"]
     // ザラトル
     const zalatlResult = document.getElementById('zalatlResult');
-    zalatlResult = soulcoreList["4"]
+    zalatlResult.innerText = soulcoreList["4"]
     // シアクラトル
     const citaqualotlResult = document.getElementById('citaqualotlResult');
-    citaqualotlResult = soulcoreList["5"]
+    citaqualotlResult.innerText = soulcoreList["5"]
     // プフアーテ
     const puhuarteResult = document.getElementById('puhuarteResult');
-    puhuarteResult = soulcoreList["6"]
+    puhuarteResult.innerText = soulcoreList["6"]
     // ザモト
     const tzamotoResult = document.getElementById('tzamotoResult');
-    tzamotoResult = soulcoreList["7"]
+    tzamotoResult.innerText = soulcoreList["7"]
     // ゾペック
     const xopecResult = document.getElementById('xopecResult');
-    xopecResult = soulcoreList["8"]
+    xopecResult.innerText = soulcoreList["8"]
     // クイポラトル
     const quipolatlResult = document.getElementById('quipolatlResult');
-    quipolatlResult = soulcoreList["9"]
+    quipolatlResult.innerText = soulcoreList["9"]
     // ティカバ
     const ticabaResult = document.getElementById('ticabaResult');
-    ticabaResult = soulcoreList["10"]
+    ticabaResult.innerText = soulcoreList["10"]
     // アトモフア
     const atmohuaResult = document.getElementById('atmohuaResult');
-    atmohuaResult = soulcoreList["11"]
+    atmohuaResult.innerText = soulcoreList["11"]
     // チョロトル
     const cholotlResult = document.getElementById('cholotlResult');
-    cholotlResult = soulcoreList["12"]
+    cholotlResult.innerText = soulcoreList["12"]
     // ザンティーピ
     const zantipiResult = document.getElementById('zantipiResult');
-    zantipiResult = soulcoreList["13"]
+    zantipiResult.innerText = soulcoreList["13"]
     // アズカパ
     const azcapaResult = document.getElementById('azcapaResult');
-    azcapaResult = soulcoreList["14"]
+    azcapaResult.innerText = soulcoreList["14"]
+
+    // 折れ線グラフ描写
+    let lineCtx = document.getElementById("lineChart").getContext('2d');
+
+    // 線グラフの設定
+    let lineConfig = {
+        type: 'line',
+        data: {
+            labels: reforgeGraphData,
+            datasets: [{
+                label: '神のオーブ',
+                data: divGraphData
+            }],
+        },
+        options: {
+			plugins: {
+				legend: {
+					display: false
+				}
+			},
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'リフォージ回数'
+                    }
+                }
+            }
+
+		}
+        /*
+        options: {
+        scales: {
+            // Y軸の最大値・最小値、目盛りの範囲などを設定する
+            
+            suggestedMin: 0,
+            suggestedMax: 60,
+            ticks: {
+                stepSize: 20,
+            }
+            }
+        },
+        },
+        */
+    };
+
+    if (lineChartObject) {
+        lineChartObject.destroy();
+    }
+
+    lineChartObject = new Chart(lineCtx, lineConfig);
 }
