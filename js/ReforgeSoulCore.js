@@ -78,6 +78,7 @@ function reforge () {
         || soulcoreList[8] >= 3
         || soulcoreList[9] >= 3
         || soulcoreList[10] >= 3
+        || soulcoreList[11] >= 3
         || soulcoreList[12] >= 3
         || soulcoreList[13] >= 3
         || soulcoreList[14] >= 1
@@ -99,8 +100,25 @@ function reforge () {
                         gold = gold - azcapaToDivTax * azcapaToDivRate;
                         div = div + azcapaToDivRate;
                     } else {
-                        // ゴールドが尽きたので終了
-                        break reforge;
+                        if(soulcoreList[0] < 3
+                            && soulcoreList[1] < 3
+                            && soulcoreList[2] < 3
+                            && soulcoreList[3] < 3
+                            && soulcoreList[4] < 3
+                            && soulcoreList[5] < 3
+                            && soulcoreList[6] < 3
+                            && soulcoreList[7] < 3
+                            && soulcoreList[8] < 3
+                            && soulcoreList[9] < 3
+                            && soulcoreList[10] < 3
+                            && soulcoreList[11] < 3
+                            && soulcoreList[12] < 3
+                            && soulcoreList[13] < 3
+                            && soulcoreList[14] < 1
+                        ){
+                            // ゴールドが尽きたので終了
+                            break reforge;
+                        }
                     }
                 } else {
                     soulcoreList[reforgedSoulcoreKey] = soulcoreList[reforgedSoulcoreKey] + 1;
@@ -121,8 +139,25 @@ function reforge () {
                     gold = gold - divToSoulcoreTax * divToSoulcoreRate;
                     soulcoreList[0] = soulcoreList[0] + divToSoulcoreRate;
                 } else {
-                    // ゴールドが尽きたので終了
-                    break reforge;
+                    if(soulcoreList[0] < 3
+                        && soulcoreList[1] < 3
+                        && soulcoreList[2] < 3
+                        && soulcoreList[3] < 3
+                        && soulcoreList[4] < 3
+                        && soulcoreList[5] < 3
+                        && soulcoreList[6] < 3
+                        && soulcoreList[7] < 3
+                        && soulcoreList[8] < 3
+                        && soulcoreList[9] < 3
+                        && soulcoreList[10] < 3
+                        && soulcoreList[11] < 3
+                        && soulcoreList[12] < 3
+                        && soulcoreList[13] < 3
+                        && soulcoreList[14] < 1
+                    ){
+                        // ゴールドが尽きたので終了
+                        break reforge;
+                    }
                 }
             }
         }
