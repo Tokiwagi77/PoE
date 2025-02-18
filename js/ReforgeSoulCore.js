@@ -200,22 +200,7 @@ function reforge () {
                     }
                 }
             }
-
 		}
-        /*
-        options: {
-        scales: {
-            // Y軸の最大値・最小値、目盛りの範囲などを設定する
-            
-            suggestedMin: 0,
-            suggestedMax: 60,
-            ticks: {
-                stepSize: 20,
-            }
-            }
-        },
-        },
-        */
     };
 
     if (lineChartObject) {
